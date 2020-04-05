@@ -1,0 +1,58 @@
+﻿<Window xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"  x:Class="WindowsTimer.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WindowsTimer"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Height="400" Width="200" MouseLeftButtonDown="Window_MouseLeftButtonDown" Background="#FF2E2E2E" Topmost="True"  WindowStyle="None" Foreground="{x:Null}" ResizeMode="NoResize" ShowInTaskbar="False" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="WindowStyleViewValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:WindowStyleView" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="ModeValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:Mode" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+
+    <StackPanel>
+        <Label Content="Settings" Foreground="White" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        <Separator Height="5"></Separator>
+        <Grid Height="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="7*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Style" Foreground="White" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+            <ComboBox ItemsSource="{Binding Source={StaticResource WindowStyleViewValues}}" SelectedItem="{Binding Path=Style}"  Grid.Column="1" Height="22"  ></ComboBox>
+        </Grid>
+        <Label Content="Background color" Foreground="White" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        <xctk:ColorPicker SelectedColor="{Binding Path=Background}" Margin="10,5,10,10" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch"  ShowRecentColors="True" DisplayColorAndName="True"/>
+        <Label Content="Text color" Foreground="White" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        <xctk:ColorPicker SelectedColor="{Binding Path=Foreground}" Margin="10,5,10,10" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" DisplayColorAndName="True" ShowRecentColors="True"/>
+        <Label Content="Size" Foreground="White" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="9*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Slider Name="SliderSettings"  Grid.Column="0" Minimum="20" Maximum="120"  SmallChange="1" Value="{Binding Path=Size, Mode=TwoWay}"/>
+            <TextBox Grid.Column="1" Text="{Binding ElementName=SliderSettings, Path=Value}" IsReadOnly="True" Margin="0,0,10,0" ></TextBox>
+        </Grid>
+        <Separator Height="5"></Separator>
+        <Grid Height="30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="7*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="Action" Foreground="White" FontSize="16" VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+            <ComboBox ItemsSource="{Binding Source={StaticResource ModeValues}}" SelectedItem="{Binding Path=Behaviour}"  Grid.Column="1" Height="22"  ></ComboBox>
+        </Grid>
+        <Button Height="30" Margin="30,30,30,10" Content="OK" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Click="OK_Click"></Button>
+    </StackPanel>
+</Window>
